@@ -12,6 +12,12 @@ GH_LINUX_TWEAKS=$GH_DIR/$GH_ME/linux-tweaks
 REPOS=(linux-tweaks post-os-install post-macos-install post-linux-install dotfiles dotfiles.pvt)
 X_PLATFORM=
 
+DOTFILES=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
+DOTFILES_PVT=".2fa .gitconfig .gitconfig-aristanetworks"
+DOTDIRS=".personalized "
+DOTDIRS_PVT=".config .ssh "
+
+
 setup_workspace_dir() {
 	mkdir -p $GH_DIR
 }
@@ -49,51 +55,44 @@ copy_dotdirs() {
 	echo Running copy_dotdirs $SOURCE $DEST
 	for dir in $@
 	do
-		cp -r $SOURCE/$dir $DEST/$dir
+		cp -r $SOURCE/$dir $DEST/
 	done
 }
 
 deploy_dotfiles() {
-	files=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
-	BACKUP_DIR=~/backup-$(date +%y%m%dT%H%M%S)
+	BACKUP_DIR=~/dotfiles-backup/$(date +%y%m%dT%H%M%S)
 	mkdir -p $BACKUP_DIR
-	copy_dotfiles $HOME $BACKUP_DIR/ $files
-	copy_dotfiles $GH_DIR/$GH_ME/dotfiles ~/ $files
+	copy_dotfiles $HOME $BACKUP_DIR/ $DOTFILES
+	copy_dotfiles $GH_DIR/$GH_ME/dotfiles ~/ $DOTFILES
 }
 
 deploy_dotfiles_pvt() {
-	files=".2fa .gitconfig .gitconfig-aristanetworks"
-	BACKUP_DIR=~/backup-$(date +%y%m%dT%H%M%S)
+	BACKUP_DIR=~/dotfiles-backup/$(date +%y%m%dT%H%M%S)
 	mkdir -p $BACKUP_DIR
-	copy_dotfiles $HOME $BACKUP_DIR/ $files
-	copy_dotfiles $GH_DIR/$GH_ME/dotfiles.pvt ~/ $files
+	copy_dotfiles $HOME $BACKUP_DIR/ $DOTFILES_PVT
+	copy_dotfiles $GH_DIR/$GH_ME/dotfiles.pvt ~/ $DOTFILES_PVT
 }
 
 deploy_dotdirs() {
-	dirs=".personalized "
-	BACKUP_DIR=~/backup-$(date +%y%m%dT%H%M%S)
+	BACKUP_DIR=~/dotfiles-backup/$(date +%y%m%dT%H%M%S)
 	mkdir -p $BACKUP_DIR
-	copy_dotdirs $HOME $BACKUP_DIR/ $dirs
-	copy_dotdirs $GH_DIR/$GH_ME/dotfiles ~/ $dirs
+	copy_dotdirs $HOME $BACKUP_DIR/ $DOTDIRS
+	copy_dotdirs $GH_DIR/$GH_ME/dotfiles ~/ $DOTDIRS
 }
 
 deploy_dotdirs_pvt() {
 	dirs=".config .ssh "
-	BACKUP_DIR=~/backup-$(date +%y%m%dT%H%M%S)
+	BACKUP_DIR=~/dotfiles-backup/$(date +%y%m%dT%H%M%S)
 	mkdir -p $BACKUP_DIR
-	copy_dotdirs $HOME $BACKUP_DIR/ $dirs
-	copy_dotdirs $GH_DIR/$GH_ME/dotfiles.pvt ~/ $dirs
+	copy_dotdirs $HOME $BACKUP_DIR/ $DOTDIRS_PVT
+	copy_dotdirs $GH_DIR/$GH_ME/dotfiles.pvt ~/ $DOTDIRS_PVT
 }
 
 vcs_dotfiles() {
-	files=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
-	copy_dotfiles $HOME $GH_DIR/$GH_ME/dotfiles $files
-	files=".2fa "
-	copy_dotfiles $HOME $GH_DIR/$GH_ME/dotfiles.pvt $files
-	dirs=".personalized "
-	copy_dotdirs $HOME $GH_DIR/$GH_ME/dotfiles $dirs
-	dirs=".config .ssh "
-	copy_dotdirs $HOME $GH_DIR/$GH_ME/dotfiles.pvt $dirs
+	copy_dotfiles $HOME $GH_DIR/$GH_ME/dotfiles $DOTFILES
+	copy_dotfiles $HOME $GH_DIR/$GH_ME/dotfiles.pvt $DOTFILES_PVT
+	copy_dotdirs $HOME $GH_DIR/$GH_ME/dotfiles $DOTDIRS
+	copy_dotdirs $HOME $GH_DIR/$GH_ME/dotfiles.pvt $DOTDIRS_PVT
 }
 
 
