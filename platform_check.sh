@@ -10,17 +10,17 @@
 case "$(uname -s)" in
 
    Darwin)
-     echo 'Mac OS X'
+     echo 'macos'
      export X_PLATFORM=macos
      ;;
 
    Linux)
-     echo 'Linux'
+     echo 'linux'
      export X_PLATFORM=linux
      ;;
 
    CYGWIN*|MINGW32*|MSYS*|MINGW*)
-     echo 'MS Windows'
+     echo 'windows'
      export X_PLATFORM=windows
      ;;
 
@@ -28,6 +28,6 @@ case "$(uname -s)" in
    # See correspondence table at the bottom of this answer
 
    *)
-     echo 'Other OS' 
+     echo 'other' 
      ;;
 esac
