@@ -149,7 +149,7 @@ common_setup() {
 
 any_platform_setup() {
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/preprocessor.sh
-    pkgs="firefox google_chrome git_delta ripgrep fzf jq"
+    pkgs="firefox google_chrome git_delta ripgrep fzf jq tree speedtest"
     for pkg in $pkgs; do
         pkg_install_script=$GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_$pkg.sh
         if [ ! -f "$pkg_install_script" ]; then
@@ -205,3 +205,5 @@ setup() {
 }
 
 setup
+
+# TODO: work specific pkgs:  colima protobuf gcloud
