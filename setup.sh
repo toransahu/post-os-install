@@ -161,7 +161,7 @@ any_platform_setup() {
 }
 
 macos_only_setup() {
-    pkgs="brew mos iterm2 rectangle"
+    pkgs="brew mos iterm2 rectangle gnu_coreutils"
     for pkg in $pkgs; do
         source $GH_MACOS_DIR/src/install_$pkg.sh
     done
@@ -205,5 +205,6 @@ setup() {
 }
 
 setup
+# vcs_dotfiles
 
 # TODO: work specific pkgs:  colima protobuf gcloud
