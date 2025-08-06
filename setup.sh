@@ -13,7 +13,7 @@ REPOS=(linux-tweaks post-os-install post-macos-install post-linux-install dotfil
 X_PLATFORM=
 
 DOTFILES=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
-DOTFILES_PVT=".2fa .gitconfig .gitconfig-aristanetworks"
+DOTFILES_PVT=".bash_history .zsh_history .duckdb_history .psql_history .python_history .2fa .gitconfig .gitconfig-aristanetworks"
 DOTDIRS=".personalized "
 DOTDIRS_PVT=".config .ssh "
 
