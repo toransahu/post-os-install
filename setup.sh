@@ -120,7 +120,7 @@ setup_java() {
 setup_zsh() {
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_zsh_autosuggestions.sh
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_zsh_syntax_highlighting.sh
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_zsh_ohmyzsh.sh
 }
 
 setup_tmux() {
@@ -160,7 +160,7 @@ common_setup() {
 
 any_platform_setup() {
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/preprocessor.sh
-    pkgs="firefox google_chrome git_delta ripgrep fzf jq tree speedtest"
+    pkgs="firefox google_chrome git_delta ripgrep fzf jq tree speedtest gpg"
     for pkg in $pkgs; do
         pkg_install_script=$GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_$pkg.sh
         if [ ! -f "$pkg_install_script" ]; then
@@ -172,7 +172,7 @@ any_platform_setup() {
 }
 
 macos_only_setup() {
-    pkgs="brew mos iterm2 rectangle gnu_coreutils gpg"
+    pkgs="brew mos iterm2 rectangle gnu_coreutils"
     for pkg in $pkgs; do
         source $GH_MACOS_DIR/src/install_$pkg.sh
     done
