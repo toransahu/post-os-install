@@ -12,7 +12,7 @@ GH_LINUX_TWEAKS=$GH_DIR/$GH_ME/linux-tweaks
 REPOS=(linux-tweaks post-os-install post-macos-install post-linux-install dotfiles dotfiles.pvt)
 X_PLATFORM=
 
-DOTFILES=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
+DOTFILES=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json .zprofile"
 DOTFILES_PVT=".bash_history .zsh_history .duckdb_history .psql_history .python_history .2fa .gitconfig"
 DOTDIRS=".personalized "
 DOTDIRS_PVT=".config .ssh "
