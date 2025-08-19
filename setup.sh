@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -euox pipefail
 source ./logging.sh
 
 GH_DIR=~/disk/E/workspace/github.com
@@ -13,7 +13,7 @@ REPOS=(linux-tweaks post-os-install post-macos-install post-linux-install dotfil
 X_PLATFORM=
 
 DOTFILES=".paths.sh .bashrc .bash_aliases .bashitrc .bash_profile .profile .bashrc.save .editorconfig .tmux.conf .vimrc .zshrc .commonrc .coc-settings.json"
-DOTFILES_PVT=".bash_history .zsh_history .duckdb_history .psql_history .python_history .2fa .gitconfig .gitconfig-aristanetworks"
+DOTFILES_PVT=".bash_history .zsh_history .duckdb_history .psql_history .python_history .2fa .gitconfig"
 DOTDIRS=".personalized "
 DOTDIRS_PVT=".config .ssh "
 
@@ -39,7 +39,7 @@ copy_dotfiles() {
     shift
     echo Running copy_dotfiles $SOURCE $DEST
     for file in $@; do
-        cp "$SOURCE/$file" "$DEST/"
+        cp "$SOURCE/$file" "$DEST/" && echo "Copy $file successful" || echo "Copy $file failed"
     done
 }
 
@@ -50,7 +50,7 @@ copy_dotdirs() {
     shift
     echo Running copy_dotdirs $SOURCE $DEST
     for dir in $@; do
-        cp -r $SOURCE/$dir $DEST/
+        cp -r $SOURCE/$dir $DEST/ && echo "Copy $dir successful" || echo "Copy $dir failed"
     done
 }
 
@@ -109,9 +109,9 @@ setup_java() {
 }
 
 setup_zsh() {
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_zsh_autosuggestions.sh
     source $GH_DIR/$GH_ME/post-$X_PLATFORM-install/src/install_zsh_syntax_highlighting.sh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
 
 setup_tmux() {
@@ -155,7 +155,7 @@ any_platform_setup() {
         if [ ! -f "$pkg_install_script" ]; then
             warn "$pkg_install_script does not exist for $X_PLATFORM"
         else
-            source $pkg_install_script
+	    source $pkg_install_script && echo "Successfully (re)installed $pkg" || echo "Failed to (re)install $pkg"
         fi
     done
 }
@@ -165,10 +165,12 @@ macos_only_setup() {
     for pkg in $pkgs; do
         source $GH_MACOS_DIR/src/install_$pkg.sh
     done
-    setup_python
-    # setup_java
-    setup_zsh
-    setup_tmux
+
+    # pkgs="python java zsh tmux"
+    pkgs="python zsh tmux"
+    for pkg in $pkgs; do
+	setup_$pkg && echo "Successfully (re)installed $pkg" || echo "Failed to (re)install $pkg"
+    done
     source ~/.paths.sh
 }
 
@@ -178,7 +180,7 @@ platform_specific_setup() {
         :
     elif [[ "$X_PLATFORM" == "macos"* ]]; then
         # Mac OSX
-        macos_setup
+        macos_only_setup
         :
     elif [[ "$X_PLATFORM" == "cygwin" ]]; then
         # POSIX compatibility layer and Linux environment emulation for Windows
