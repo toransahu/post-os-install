@@ -95,7 +95,7 @@ setup_ssh() {
     chmod 600 ~/.ssh/id_*
 }
 
-setup_gpg() {
+import_gpg_keys() {
      gpg --import $GH_ME/dotfiles.pvt/.gnupg/toran.sahu@yahoo.com.key
 }
 
@@ -155,7 +155,7 @@ common_setup() {
     deploy_dotdirs
     deploy_dotdirs_pvt
     setup_ssh
-    setup_gpg
+    import_gpg_keys
 }
 
 any_platform_setup() {
@@ -172,7 +172,7 @@ any_platform_setup() {
 }
 
 macos_only_setup() {
-    pkgs="brew mos iterm2 rectangle gnu_coreutils"
+    pkgs="brew mos iterm2 rectangle gnu_coreutils gpg"
     for pkg in $pkgs; do
         source $GH_MACOS_DIR/src/install_$pkg.sh
     done
