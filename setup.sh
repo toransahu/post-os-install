@@ -90,6 +90,15 @@ vcs_dotfiles() {
     copy_dotdirs $HOME $GH_DIR/$GH_ME/dotfiles.pvt $DOTDIRS_PVT
 }
 
+setup_ssh() {
+    chmod 700 ~/.ssh/
+    chmod 600 ~/.ssh/id_*
+}
+
+setup_gpg() {
+     gpg --import $GH_ME/dotfiles.pvt/.gnupg/toran.sahu@yahoo.com.key
+}
+
 install_additional_packages() {
     wget -O - https://raw.githubusercontent.com/toransahu/post-linux-install/master/src/setup_additional_pkg.sh | sh
 }
@@ -145,6 +154,8 @@ common_setup() {
     deploy_dotfiles_pvt
     deploy_dotdirs
     deploy_dotdirs_pvt
+    setup_ssh
+    setup_gpg
 }
 
 any_platform_setup() {
